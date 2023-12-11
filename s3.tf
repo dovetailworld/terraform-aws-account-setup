@@ -9,7 +9,7 @@ resource "aws_s3_bucket" "kabisa_terraform_statefiles_bucket" {
 }
 
 resource "aws_s3_bucket_acl" "s3_bucket_private_acl" {
-  count  = var.s3_bucket_state_file_creation ? 1 : 0
+  count      = var.s3_bucket_state_file_creation ? 1 : 0
   bucket     = aws_s3_bucket.kabisa_terraform_statefiles_bucket[count.index].id
   acl        = "private"
   depends_on = [aws_s3_bucket_ownership_controls.s3_bucket_acl_ownership]
