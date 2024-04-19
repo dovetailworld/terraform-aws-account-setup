@@ -60,7 +60,7 @@ variable "require_symbols" {
 
 variable "allow_users_to_change_password" {
   type        = bool
-  description = "Whether to allow users to change their own password"
+  description = "Whether to allow users to change their own password."
   default     = true
 }
 
@@ -72,7 +72,7 @@ variable "max_password_age" {
 
 variable "hard_expiry" {
   type        = bool
-  description = "Whether users are prevented from setting a new password after their password has expired (i.e. require administrator reset)"
+  description = "Whether users are prevented from setting a new password after their password has expired (i.e. require administrator reset)."
   default     = false
 }
 
@@ -92,12 +92,12 @@ variable "read_only_group_name" {
 
 variable "cloudtrail_bucket" {
   type        = string
-  description = "The name of the cloudtrail bucket"
+  description = "The name of the cloudtrail bucket."
 }
 
 variable "tags" {
   type        = map(string)
-  description = "Map of tags to apply on the resources"
+  description = "Map of tags to apply on the resources."
   default     = {}
 }
 
@@ -108,7 +108,7 @@ variable "trail_name" {
 
 variable "include_global_service_events" {
   type        = bool
-  description = "Specifies whether the trail is publishing events from global services such as IAM to the log files. "
+  description = "Specifies whether the trail is publishing events from global services such as IAM to the log files."
   default     = true
 }
 
@@ -120,13 +120,13 @@ variable "enable_log_file_validation" {
 
 variable "is_multi_region_trail" {
   type        = bool
-  description = "Specifies whether the trail is created in the current region or in all regions. "
+  description = "Specifies whether the trail is created in the current region or in all regions."
   default     = true
 }
 
 variable "event_selector" {
   type        = list(string)
-  description = "Specifies an event selector for enabling data event logging, It needs to be a list of map values. See: https://www.terraform.io/docs/providers/aws/r/cloudtrail.html for details on this map variable"
+  description = "Specifies an event selector for enabling data event logging, It needs to be a list of map values. See: https://www.terraform.io/docs/providers/aws/r/cloudtrail.html for details on this map variable."
   default     = []
 }
 
@@ -144,19 +144,19 @@ variable "enable_cloudwatch_logs" {
 
 variable "cloudwatch_log_group_name" {
   type        = string
-  description = "The name of the cloudwatch log name"
+  description = "The name of the cloudwatch log name."
   default     = "CloudTrail/DefaultLogGroup"
 }
 
 variable "cloudwatch_iam_policy_name" {
   type        = string
-  description = "The name of the policy which is used for the cloudtrail cloudwatch role"
+  description = "The name of the policy which is used for the cloudtrail cloudwatch role."
   default     = "terraform-cloudwatch-policy"
 }
 
 variable "cloudwatch_iam_role_name" {
   type        = string
-  description = "The name of the role which of the cloudtrail cloudwatch role"
+  description = "The name of the role which of the cloudtrail cloudwatch role."
   default     = "terraform-cloudwatch-role"
 }
 
@@ -168,62 +168,62 @@ variable "enable_monitor_readonly_user" {
 
 variable "monitor_readonly_user_name" {
   type        = string
-  description = "The user name for the monitor read only user"
+  description = "The user name for the monitor read only user."
   default     = "monitor_readonly"
 }
 
 variable "kms_key_id" {
   type        = string
-  description = "The arn of the CMK key which is used for encrypting cloudtrail logs"
+  description = "The arn of the CMK key which is used for encrypting cloudtrail logs."
 }
 
 ### AWS Config
 variable "aws_config_notification_emails" {
-  description = "A list of email addresses for that will receive AWS Config changes notifications"
+  description = "A list of email addresses for that will receive AWS Config changes notifications."
   default     = []
   type        = list(string)
 }
 
 variable "enable_aws_config" {
   type        = bool
-  description = "Specifies if the AWS Config should be enabled"
+  description = "Specifies if the AWS Config should be enabled."
   default     = false
 }
 
 variable "tag1Key" {
   type        = string
   default     = ""
-  description = "Specifies value of the Key for Tag1"
+  description = "Specifies value of the Key for Tag1."
 }
 
 variable "enable_rule_require_tag" {
   type        = bool
-  description = "Specifies if 'Require Tag' rule should be enabled"
+  description = "Specifies if 'Require Tag' rule should be enabled."
   default     = false
 }
 
 variable "enable_rule_require_root_account_MFA" {
   type        = bool
-  description = "Specifies if 'Require root account MFA enabled' rule should be enabled"
+  description = "Specifies if 'Require root account MFA enabled' rule should be enabled."
   default     = false
 }
 
 variable "enable_rule_require_cloud_trail" {
   type        = bool
-  description = "Specifies if 'Cloud Trail enabled' rule should be enabled"
+  description = "Specifies if 'Cloud Trail enabled' rule should be enabled."
   default     = false
 }
 
 variable "enable_rule_iam_password_policy" {
   type        = bool
-  description = "Specifies if 'IAM password policy' rule should be enabled"
+  description = "Specifies if 'IAM password policy' rule should be enabled."
   default     = false
 }
 
 ### SSM Session Manager
 variable "enable_ssm_session_manager" {
   type        = bool
-  description = "Specifies if the ssm session manager should be enabled"
+  description = "Specifies if the ssm session manager should be enabled."
   default     = false
 }
 
@@ -254,36 +254,36 @@ variable "cloudwatch_encryption_enabled" {
 variable "s3_bucket_state_file_creation" {
   type        = bool
   default     = false
-  description = "Whether to create S3 bucket in the AWS Account to store terraform state file"
+  description = "Whether to create S3 bucket in the AWS Account to store terraform state file."
 }
 
 variable "s3_bucket_state_file_name" {
   type        = string
   default     = ""
-  description = "The S3 bucket name which store the terraform state file"
+  description = "The S3 bucket name which store the terraform state file."
 }
 
 variable "dynamodb_tables_creation" {
   type        = bool
   default     = false
-  description = "Whether to create dynamodb tables for terraform state file"
+  description = "Whether to create dynamodb tables for terraform state file."
 }
 
 variable "dynamodb_tables_name" {
   type        = string
   default     = ""
-  description = "The dynamodb tables name"
+  description = "The dynamodb tables name."
 }
 
 variable "enable_oam" {
   type        = bool
   default     = false
-  description = "Whether to create resources used for oam"
+  description = "Whether to create resources used for oam."
 }
 
 variable "monitoring_account" {
   type        = string
-  description = "AWS monitoring account ID"
+  description = "AWS monitoring account ID."
 }
 
 variable "sink_identifier" {
