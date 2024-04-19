@@ -247,6 +247,12 @@ variable "dynamodb_tables_name" {
   description = "The dynamodb tables name"
 }
 
+variable "monitoring_account" {
+  type = string
+  description = "Provide the AWS monitoring account ID"
+}
+
 variable "sink_identifier" {
   type = string
+  description = "Provide the sink ID"
 }
