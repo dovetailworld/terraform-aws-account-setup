@@ -28,7 +28,7 @@ In addition this module is able to create the necessary resources to enable Clou
 
 ### Example usages
 
-> ⚠️ 👉🏻 This an example, it might be that certain settings are not 'best-practise'.
+> ⚠️ 👉🏻 This is an example, it might be that certain settings are not 'best-practise'.
 
 ```terraform
 module "account_setup" {
