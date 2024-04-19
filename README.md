@@ -43,7 +43,14 @@ module "account_setup" {
   kms_key_id        = ""
   trail_name        = local.account-name
 
+  # cloudwatch
   enable_cloudwatch_logs = true
+
+  # oam
+  # Note: Do not enable this on the monitoring account itself!
+  enable_oam         = true
+  sink_identifier    = ""
+  monitoring_account = ""
 
   # config
   enable_aws_config                    = false

@@ -278,12 +278,20 @@ variable "dynamodb_tables_name" {
   description = "The dynamodb tables name"
 }
 
+variable "enable_oam" {
+  type        = bool
+  default     = false
+  description = "Whether to create resources used for oam"
+}
+
 variable "monitoring_account" {
   type        = string
-  description = "Provide the AWS monitoring account ID"
+  default     = ""
+  description = "AWS monitoring account ID"
 }
 
 variable "sink_identifier" {
   type        = string
-  description = "Provide the sink ID"
+  default     = ""
+  description = "Sink ID"
 }
