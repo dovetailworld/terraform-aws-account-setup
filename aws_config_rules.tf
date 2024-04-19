@@ -115,4 +115,3 @@ POLICY
     aws_config_delivery_channel.aws_config_delivery_channel,
   ]
 }
-

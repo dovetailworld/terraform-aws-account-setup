@@ -17,4 +17,3 @@ resource "aws_iam_group_policy_attachment" "admin" {
   group      = aws_iam_group.admin[0].name
   policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
 }
-

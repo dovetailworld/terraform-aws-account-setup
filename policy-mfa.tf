@@ -122,4 +122,3 @@ resource "aws_iam_policy" "mfa" {
 
   policy = data.aws_iam_policy_document.force_mfa.json
 }
-

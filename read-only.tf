@@ -8,4 +8,3 @@ resource "aws_iam_group_policy_attachment" "read-only-policy-attachment" {
   group      = aws_iam_group.read-only-group[0].name
   policy_arn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
 }
-

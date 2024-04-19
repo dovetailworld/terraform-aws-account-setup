@@ -50,4 +50,3 @@ resource "aws_iam_access_key" "monitor_readonly_user_access_key" {
   count = var.enable_monitor_readonly_user ? 1 : 0
   user  = aws_iam_user.monitor_readonly_user[0].name
 }
-

@@ -11,4 +11,3 @@ resource "aws_iam_account_password_policy" "pasword_policy" {
   max_password_age               = var.max_password_age
   hard_expiry                    = var.hard_expiry
 }
-

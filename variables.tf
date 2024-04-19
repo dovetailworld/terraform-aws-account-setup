@@ -246,4 +246,3 @@ variable "dynamodb_tables_name" {
   default     = ""
   description = "The dynamodb tables name"
 }
-
