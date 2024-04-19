@@ -13,7 +13,7 @@ resource "aws_cloudtrail" "cloudtrail" {
 
   name                          = var.trail_name
   s3_bucket_name                = var.cloudtrail_bucket != "" ? var.cloudtrail_bucket : local.bucket_name
-  cloud_watch_logs_role_arn     = join("", aws_iam_role.cloudwatch_iam_role.*.arn)
+  cloud_watch_logs_role_arn     = join("", aws_iam_role.cloudwatch_iam_role[*].arn)
   cloud_watch_logs_group_arn    = length(aws_cloudwatch_log_group.log_group) == 1 ? "${aws_cloudwatch_log_group.log_group[0].arn}:*" : null
   include_global_service_events = var.include_global_service_events
   enable_log_file_validation    = var.enable_log_file_validation

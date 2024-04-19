@@ -4,21 +4,23 @@
 
 This terraform modules configures the following in IAM:
 
-- Creates a policy to enforce MFA
-- Sets a script password policy
-- Creates a group with admin privileges, with MFA enable_admin_group
-- Creates a group with read-only policy (disabled by default)
-- Creates a global cloud trail (disabled by default)
-- Creates a user including access keys for monitoring purposes (disabled by default)
+- Creates a policy to enforce MFA;
+- Sets a script password policy;
+- Creates a group with admin privileges, with MFA enable_admin_group;
+- Creates a group with read-only policy (disabled by default);
+- Creates a global cloud trail (disabled by default);
+- Creates a user including access keys for monitoring purposes (disabled by default).
 
 All features can be enabled or disabled, default is enabled.
 
 The following AWS Config rules can be enabled (AWS Config is disabled by default, each rule can be enabled individually):
 
-- Require a specific tag on the resources<sup>1</sup>
-- Require root account MFA enabled
-- Cloud trail enabled
-- IAM password policy compliance
+- Require a specific tag on the resources<sup>1</sup>;
+- Require root account MFA enabled;
+- Cloud trail enabled;
+- IAM password policy compliance.
+
+In addition this module is able to create the necessary resources to enable CloudWatch cross-account observability (oam), this feature is disabled by default. Make sure you have an AWS account configured as monitoring account before enabling. More details can be found [here](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Cross-Account-Cross-Region.html).
 
 <sup>1</sup>Terraform does not allow passing unset value similar to `!Ref "AWS::NoValue"`. Due to this limitation only a single tag `tag1Key` can be passed as a parameter to to this module. If you require additional key-value pairs in your AWS config REQUIRED_TAGS rule, the module must be extended manually.
 
@@ -26,7 +28,7 @@ The following AWS Config rules can be enabled (AWS Config is disabled by default
 
 ### Example usages
 
-> ⚠️ 👉🏻 This an example, it might be that certain settings are not 'best-practise'.
+> ⚠️ 👉🏻 This is an example, it might be that certain settings are not 'best-practise'.
 
 ```terraform
 module "account_setup" {
@@ -43,7 +45,14 @@ module "account_setup" {
   kms_key_id        = ""
   trail_name        = local.account-name
 
+  # cloudwatch
   enable_cloudwatch_logs = true
+
+  # oam
+  # Note: Do not enable this on the monitoring account itself!
+  enable_oam         = true
+  sink_identifier    = ""
+  monitoring_account = ""
 
   # config
   enable_aws_config                    = false
@@ -65,14 +74,15 @@ module "account_setup" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 4.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.0 |
+| <a name="requirement_null"></a> [null](#requirement\_null) | ~> 3.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 4.0 |
-| <a name="provider_null"></a> [null](#provider\_null) | n/a |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.0 |
+| <a name="provider_null"></a> [null](#provider\_null) | ~> 3.0 |
 
 ## Modules
 
@@ -105,11 +115,16 @@ No modules.
 | [aws_iam_policy.monitor_readonly_user_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_role.aws_config_iam_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role.cloudwatch_iam_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
+| [aws_iam_role.cw_cas_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role_policy.aws_config_iam_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy) | resource |
 | [aws_iam_role_policy_attachment.aws_config_iam_policy_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_iam_role_policy_attachment.cloudwatch_iam_policy_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_role_policy_attachment.cw-dashboard-attach](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_role_policy_attachment.cw-readonly-attach](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_role_policy_attachment.xray-readonly-attach](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_iam_user.monitor_readonly_user](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user) | resource |
 | [aws_kms_key.cloudtrail_bucket_key](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_key) | resource |
+| [aws_oam_link.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/oam_link) | resource |
 | [aws_s3_bucket.aws_config_configuration_bucket](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket) | resource |
 | [aws_s3_bucket.cloudtrail_bucket](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket) | resource |
 | [aws_s3_bucket.kabisa_terraform_statefiles_bucket](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket) | resource |
@@ -138,9 +153,8 @@ No modules.
 | <a name="input_admin_group_name"></a> [admin\_group\_name](#input\_admin\_group\_name) | Name of the admin group. | `string` | `"admins"` | no |
 | <a name="input_allow_users_to_change_password"></a> [allow\_users\_to\_change\_password](#input\_allow\_users\_to\_change\_password) | Whether to allow users to change their own password | `bool` | `true` | no |
 | <a name="input_aws_config_notification_emails"></a> [aws\_config\_notification\_emails](#input\_aws\_config\_notification\_emails) | A list of email addresses for that will receive AWS Config changes notifications | `list(string)` | `[]` | no |
-| <a name="input_cloudtrail_bucket"></a> [cloudtrail\_bucket](#input\_cloudtrail\_bucket) | The name of the cloudtrail bucket | `string` | `""` | no |
-| <a name="input_cloudtrail_bucket_region"></a> [cloudtrail\_bucket\_region](#input\_cloudtrail\_bucket\_region) | The region where the cloudtrail bucket will be created or is located, required if cloudtrail is enabled | `string` | `""` | no |
-| <a name="input_cloudwatch_encryption_enabled"></a> [cloudwatch\_encryption\_enabled](#input\_cloudwatch\_encryption\_enabled) | (Optional) Encrypt log data. | `bool` | `false` | no |
+| <a name="input_cloudtrail_bucket"></a> [cloudtrail\_bucket](#input\_cloudtrail\_bucket) | The name of the cloudtrail bucket | `string` | n/a | yes |
+| <a name="input_cloudwatch_encryption_enabled"></a> [cloudwatch\_encryption\_enabled](#input\_cloudwatch\_encryption\_enabled) | Encrypt log data. | `bool` | `false` | no |
 | <a name="input_cloudwatch_iam_policy_name"></a> [cloudwatch\_iam\_policy\_name](#input\_cloudwatch\_iam\_policy\_name) | The name of the policy which is used for the cloudtrail cloudwatch role | `string` | `"terraform-cloudwatch-policy"` | no |
 | <a name="input_cloudwatch_iam_role_name"></a> [cloudwatch\_iam\_role\_name](#input\_cloudwatch\_iam\_role\_name) | The name of the role which of the cloudtrail cloudwatch role | `string` | `"terraform-cloudwatch-role"` | no |
 | <a name="input_cloudwatch_log_group_name"></a> [cloudwatch\_log\_group\_name](#input\_cloudwatch\_log\_group\_name) | The name of the cloudwatch log name | `string` | `"CloudTrail/DefaultLogGroup"` | no |
@@ -154,6 +168,7 @@ No modules.
 | <a name="input_enable_log_file_validation"></a> [enable\_log\_file\_validation](#input\_enable\_log\_file\_validation) | Specifies whether log file integrity validation is enabled. | `bool` | `true` | no |
 | <a name="input_enable_mfa"></a> [enable\_mfa](#input\_enable\_mfa) | Enable to force MFA usages. | `bool` | `true` | no |
 | <a name="input_enable_monitor_readonly_user"></a> [enable\_monitor\_readonly\_user](#input\_enable\_monitor\_readonly\_user) | Create a user that can read monitor metrics (e.g. for grafana) | `bool` | `false` | no |
+| <a name="input_enable_oam"></a> [enable\_oam](#input\_enable\_oam) | Whether to create resources used for oam | `bool` | `false` | no |
 | <a name="input_enable_read_only_group"></a> [enable\_read\_only\_group](#input\_enable\_read\_only\_group) | Creates a group with read-only IAM policy assigned to it. | `bool` | `false` | no |
 | <a name="input_enable_rule_iam_password_policy"></a> [enable\_rule\_iam\_password\_policy](#input\_enable\_rule\_iam\_password\_policy) | Specifies if 'IAM password policy' rule should be enabled | `bool` | `false` | no |
 | <a name="input_enable_rule_require_cloud_trail"></a> [enable\_rule\_require\_cloud\_trail](#input\_enable\_rule\_require\_cloud\_trail) | Specifies if 'Cloud Trail enabled' rule should be enabled | `bool` | `false` | no |
@@ -164,10 +179,11 @@ No modules.
 | <a name="input_hard_expiry"></a> [hard\_expiry](#input\_hard\_expiry) | Whether users are prevented from setting a new password after their password has expired (i.e. require administrator reset) | `bool` | `false` | no |
 | <a name="input_include_global_service_events"></a> [include\_global\_service\_events](#input\_include\_global\_service\_events) | Specifies whether the trail is publishing events from global services such as IAM to the log files. | `bool` | `true` | no |
 | <a name="input_is_multi_region_trail"></a> [is\_multi\_region\_trail](#input\_is\_multi\_region\_trail) | Specifies whether the trail is created in the current region or in all regions. | `bool` | `true` | no |
-| <a name="input_kms_key_id"></a> [kms\_key\_id](#input\_kms\_key\_id) | The arn of the CMK key which is used for encrypting cloudtrail logs | `string` | `""` | no |
+| <a name="input_kms_key_id"></a> [kms\_key\_id](#input\_kms\_key\_id) | The arn of the CMK key which is used for encrypting cloudtrail logs | `string` | n/a | yes |
 | <a name="input_max_password_age"></a> [max\_password\_age](#input\_max\_password\_age) | The number of days that an user password is valid. | `number` | `33` | no |
 | <a name="input_minimum_password_length"></a> [minimum\_password\_length](#input\_minimum\_password\_length) | Minimum length to require for user passwords. | `number` | `32` | no |
 | <a name="input_monitor_readonly_user_name"></a> [monitor\_readonly\_user\_name](#input\_monitor\_readonly\_user\_name) | The user name for the monitor read only user | `string` | `"monitor_readonly"` | no |
+| <a name="input_monitoring_account"></a> [monitoring\_account](#input\_monitoring\_account) | AWS monitoring account ID | `string` | n/a | yes |
 | <a name="input_password_reuse_prevention"></a> [password\_reuse\_prevention](#input\_password\_reuse\_prevention) | The number of previous passwords that users are prevented from reusing. | `number` | `1` | no |
 | <a name="input_read_only_group_name"></a> [read\_only\_group\_name](#input\_read\_only\_group\_name) | Name for read-only group. | `string` | `"read-only"` | no |
 | <a name="input_require_lowercase_characters"></a> [require\_lowercase\_characters](#input\_require\_lowercase\_characters) | Whether to require lowercase characters for user passwords. | `bool` | `true` | no |
@@ -177,11 +193,12 @@ No modules.
 | <a name="input_s3_bucket_name"></a> [s3\_bucket\_name](#input\_s3\_bucket\_name) | (Optional) The name of bucket to store session logs. Specifying this enables writing session output to an Amazon S3 bucket. | `string` | `""` | no |
 | <a name="input_s3_bucket_state_file_creation"></a> [s3\_bucket\_state\_file\_creation](#input\_s3\_bucket\_state\_file\_creation) | Whether to create S3 bucket in the AWS Account to store terraform state file | `bool` | `false` | no |
 | <a name="input_s3_bucket_state_file_name"></a> [s3\_bucket\_state\_file\_name](#input\_s3\_bucket\_state\_file\_name) | The S3 bucket name which store the terraform state file | `string` | `""` | no |
-| <a name="input_s3_encryption_enabled"></a> [s3\_encryption\_enabled](#input\_s3\_encryption\_enabled) | (Optional) Encrypt log data. | `bool` | `false` | no |
+| <a name="input_s3_encryption_enabled"></a> [s3\_encryption\_enabled](#input\_s3\_encryption\_enabled) | Encrypt log data. | `bool` | `false` | no |
 | <a name="input_s3_key_prefix"></a> [s3\_key\_prefix](#input\_s3\_key\_prefix) | (Optional) To write output to a sub-folder, enter a sub-folder name. | `string` | `""` | no |
+| <a name="input_sink_identifier"></a> [sink\_identifier](#input\_sink\_identifier) | Sink ID | `string` | n/a | yes |
 | <a name="input_tag1Key"></a> [tag1Key](#input\_tag1Key) | Specifies value of the Key for Tag1 | `string` | `""` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Map of tags to apply on the resources | `map(string)` | `{}` | no |
-| <a name="input_trail_name"></a> [trail\_name](#input\_trail\_name) | Name of the cloud trail. Required if the cloudtrail is enabled. | `string` | `""` | no |
+| <a name="input_trail_name"></a> [trail\_name](#input\_trail\_name) | Name of the cloud trail. Required if the cloudtrail is enabled. | `string` | n/a | yes |
 
 ## Outputs
 
