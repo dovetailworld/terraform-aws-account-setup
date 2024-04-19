@@ -1,5 +1,7 @@
 # Terraform module configure IAM in a new Amazon account_setup
 
+> ⚠️ 👉🏻 These instruction are outdated, certain features might have been removed or added.
+
 This terraform modules configures the following in IAM:
 
 - Creates a policy to enforce MFA
@@ -23,6 +25,8 @@ The following AWS Config rules can be enabled (AWS Config is disabled by default
 ## Usage
 
 ### Example usages
+
+> ⚠️ 👉🏻 This an example, it might be that certain settings are not 'best-practise'.
 
 ```terraform
 module "account_setup" {
