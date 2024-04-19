@@ -8,7 +8,7 @@ terraform {
     }
 
     null = {
-      source = "hashicopr/null"
+      source = "hashicorp/null"
       version = "~> 3.0"
     }
   }
