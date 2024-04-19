@@ -192,6 +192,7 @@ variable "enable_aws_config" {
 
 variable "tag1Key" {
   type        = string
+  default     = ""
   description = "Specifies value of the Key for Tag1"
 }
 
@@ -258,6 +259,7 @@ variable "s3_bucket_state_file_creation" {
 
 variable "s3_bucket_state_file_name" {
   type        = string
+  default     = ""
   description = "The S3 bucket name which store the terraform state file"
 }
 
@@ -269,6 +271,7 @@ variable "dynamodb_tables_creation" {
 
 variable "dynamodb_tables_name" {
   type        = string
+  default     = ""
   description = "The dynamodb tables name"
 }
 
