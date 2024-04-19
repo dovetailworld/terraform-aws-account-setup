@@ -246,3 +246,7 @@ variable "dynamodb_tables_name" {
   default     = ""
   description = "The dynamodb tables name"
 }
+
+variable "sink_identifier" {
+  type = string
+}
