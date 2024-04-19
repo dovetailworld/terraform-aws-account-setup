@@ -39,4 +39,3 @@ output "monitor_readonly_user_secret_access_key" {
     0,
   )
 }
-

@@ -20,4 +20,3 @@ resource "aws_ssm_document" "session_manager_prefs" {
 DOC
 
 }
-
