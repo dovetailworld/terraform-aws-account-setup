@@ -4,21 +4,23 @@
 
 This terraform modules configures the following in IAM:
 
-- Creates a policy to enforce MFA
-- Sets a script password policy
-- Creates a group with admin privileges, with MFA enable_admin_group
-- Creates a group with read-only policy (disabled by default)
-- Creates a global cloud trail (disabled by default)
-- Creates a user including access keys for monitoring purposes (disabled by default)
+- Creates a policy to enforce MFA;
+- Sets a script password policy;
+- Creates a group with admin privileges, with MFA enable_admin_group;
+- Creates a group with read-only policy (disabled by default);
+- Creates a global cloud trail (disabled by default);
+- Creates a user including access keys for monitoring purposes (disabled by default).
 
 All features can be enabled or disabled, default is enabled.
 
 The following AWS Config rules can be enabled (AWS Config is disabled by default, each rule can be enabled individually):
 
-- Require a specific tag on the resources<sup>1</sup>
-- Require root account MFA enabled
-- Cloud trail enabled
-- IAM password policy compliance
+- Require a specific tag on the resources<sup>1</sup>;
+- Require root account MFA enabled;
+- Cloud trail enabled;
+- IAM password policy compliance.
+
+In addition the module is able to create the necessary resources to enable CloudWatch cross-account observability (oam), theis feature is disabled by default. Make sure you have an AWS account configured as monitoring account before enabling. More details can be found [here](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Cross-Account-Cross-Region.html).
 
 <sup>1</sup>Terraform does not allow passing unset value similar to `!Ref "AWS::NoValue"`. Due to this limitation only a single tag `tag1Key` can be passed as a parameter to to this module. If you require additional key-value pairs in your AWS config REQUIRED_TAGS rule, the module must be extended manually.
 
