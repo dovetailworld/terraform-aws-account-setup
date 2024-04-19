@@ -93,7 +93,6 @@ variable "read_only_group_name" {
 variable "cloudtrail_bucket" {
   type        = string
   description = "The name of the cloudtrail bucket"
-  default     = ""
 }
 
 variable "tags" {
@@ -105,7 +104,6 @@ variable "tags" {
 variable "trail_name" {
   type        = string
   description = "Name of the cloud trail. Required if the cloudtrail is enabled."
-  default     = ""
 }
 
 variable "include_global_service_events" {
@@ -177,7 +175,6 @@ variable "monitor_readonly_user_name" {
 variable "kms_key_id" {
   type        = string
   description = "The arn of the CMK key which is used for encrypting cloudtrail logs"
-  default     = ""
 }
 
 ### AWS Config
@@ -196,7 +193,6 @@ variable "enable_aws_config" {
 variable "tag1Key" {
   type        = string
   description = "Specifies value of the Key for Tag1"
-  default     = ""
 }
 
 variable "enable_rule_require_tag" {
@@ -245,13 +241,13 @@ variable "s3_key_prefix" {
 variable "s3_encryption_enabled" {
   type        = bool
   default     = false
-  description = "(Optional) Encrypt log data."
+  description = "Encrypt log data."
 }
 
 variable "cloudwatch_encryption_enabled" {
   type        = bool
   default     = false
-  description = "(Optional) Encrypt log data."
+  description = "Encrypt log data."
 }
 
 variable "s3_bucket_state_file_creation" {
@@ -262,7 +258,6 @@ variable "s3_bucket_state_file_creation" {
 
 variable "s3_bucket_state_file_name" {
   type        = string
-  default     = ""
   description = "The S3 bucket name which store the terraform state file"
 }
 
@@ -274,7 +269,6 @@ variable "dynamodb_tables_creation" {
 
 variable "dynamodb_tables_name" {
   type        = string
-  default     = ""
   description = "The dynamodb tables name"
 }
 
@@ -286,12 +280,10 @@ variable "enable_oam" {
 
 variable "monitoring_account" {
   type        = string
-  default     = ""
   description = "AWS monitoring account ID"
 }
 
 variable "sink_identifier" {
   type        = string
-  default     = ""
   description = "Sink ID"
 }
