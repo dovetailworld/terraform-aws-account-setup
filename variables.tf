@@ -29,19 +29,19 @@ variable "password_reuse_prevention" {
 }
 
 variable "minimum_password_length" {
-  type = number
+  type        = number
   description = "Minimum length to require for user passwords."
   default     = 32
 }
 
 variable "require_lowercase_characters" {
-  type = bool
+  type        = bool
   description = "Whether to require lowercase characters for user passwords."
   default     = true
 }
 
 variable "require_numbers" {
-  type = bool
+  type        = bool
   description = "Whether to require numbers for user passwords."
   default     = true
 }
