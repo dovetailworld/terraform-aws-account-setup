@@ -157,7 +157,7 @@ No modules.
 | <a name="input_cloudwatch_iam_role_name"></a> [cloudwatch\_iam\_role\_name](#input\_cloudwatch\_iam\_role\_name) | The name of the role which of the cloudtrail cloudwatch role | `string` | `"terraform-cloudwatch-role"` | no |
 | <a name="input_cloudwatch_log_group_name"></a> [cloudwatch\_log\_group\_name](#input\_cloudwatch\_log\_group\_name) | The name of the cloudwatch log name | `string` | `"CloudTrail/DefaultLogGroup"` | no |
 | <a name="input_dynamodb_tables_creation"></a> [dynamodb\_tables\_creation](#input\_dynamodb\_tables\_creation) | Whether to create dynamodb tables for terraform state file | `bool` | `false` | no |
-| <a name="input_dynamodb_tables_name"></a> [dynamodb\_tables\_name](#input\_dynamodb\_tables\_name) | The dynamodb tables name | `string` | n/a | yes |
+| <a name="input_dynamodb_tables_name"></a> [dynamodb\_tables\_name](#input\_dynamodb\_tables\_name) | The dynamodb tables name | `string` | `""` | no |
 | <a name="input_enable_account_password_policy"></a> [enable\_account\_password\_policy](#input\_enable\_account\_password\_policy) | Enable custom (strict) password policy. | `bool` | `true` | no |
 | <a name="input_enable_admin_group"></a> [enable\_admin\_group](#input\_enable\_admin\_group) | Create an admin group. | `bool` | `true` | no |
 | <a name="input_enable_aws_config"></a> [enable\_aws\_config](#input\_enable\_aws\_config) | Specifies if the AWS Config should be enabled | `bool` | `false` | no |
@@ -190,11 +190,11 @@ No modules.
 | <a name="input_require_uppercase_characters"></a> [require\_uppercase\_characters](#input\_require\_uppercase\_characters) | Whether to require uppercase characters for user passwords. | `bool` | `true` | no |
 | <a name="input_s3_bucket_name"></a> [s3\_bucket\_name](#input\_s3\_bucket\_name) | (Optional) The name of bucket to store session logs. Specifying this enables writing session output to an Amazon S3 bucket. | `string` | `""` | no |
 | <a name="input_s3_bucket_state_file_creation"></a> [s3\_bucket\_state\_file\_creation](#input\_s3\_bucket\_state\_file\_creation) | Whether to create S3 bucket in the AWS Account to store terraform state file | `bool` | `false` | no |
-| <a name="input_s3_bucket_state_file_name"></a> [s3\_bucket\_state\_file\_name](#input\_s3\_bucket\_state\_file\_name) | The S3 bucket name which store the terraform state file | `string` | n/a | yes |
+| <a name="input_s3_bucket_state_file_name"></a> [s3\_bucket\_state\_file\_name](#input\_s3\_bucket\_state\_file\_name) | The S3 bucket name which store the terraform state file | `string` | `""` | no |
 | <a name="input_s3_encryption_enabled"></a> [s3\_encryption\_enabled](#input\_s3\_encryption\_enabled) | Encrypt log data. | `bool` | `false` | no |
 | <a name="input_s3_key_prefix"></a> [s3\_key\_prefix](#input\_s3\_key\_prefix) | (Optional) To write output to a sub-folder, enter a sub-folder name. | `string` | `""` | no |
 | <a name="input_sink_identifier"></a> [sink\_identifier](#input\_sink\_identifier) | Sink ID | `string` | n/a | yes |
-| <a name="input_tag1Key"></a> [tag1Key](#input\_tag1Key) | Specifies value of the Key for Tag1 | `string` | n/a | yes |
+| <a name="input_tag1Key"></a> [tag1Key](#input\_tag1Key) | Specifies value of the Key for Tag1 | `string` | `""` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Map of tags to apply on the resources | `map(string)` | `{}` | no |
 | <a name="input_trail_name"></a> [trail\_name](#input\_trail\_name) | Name of the cloud trail. Required if the cloudtrail is enabled. | `string` | n/a | yes |
 
