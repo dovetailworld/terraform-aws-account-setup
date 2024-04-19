@@ -1,3 +1,5 @@
+# For this to work you need to have an AWS account configured as monitor account
+
 # AWS CloudWatch Observability Access Manager Link
 # Allows an AWS account to be connected to a monitor account
 resource "aws_oam_link" "this" {
@@ -9,6 +11,7 @@ resource "aws_oam_link" "this" {
     "AWS::ApplicationInsights::Application",
     "AWS::InternetMonitor::Monitor"
   ]
+  # This identifier is created in the monitoring account
   sink_identifier = var.sink_identifier
 }
 
@@ -24,7 +27,7 @@ resource "aws_iam_role" "cw_cas_role" {
         Action = "sts:AssumeRole"
         Effect = "Allow"
         Principal = {
-          "AWS": "arn:aws:iam::${var.monitoring_account}:root"
+          "AWS" : "arn:aws:iam::${var.monitoring_account}:root"
         }
       },
     ]
