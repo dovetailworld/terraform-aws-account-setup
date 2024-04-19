@@ -20,7 +20,7 @@ The following AWS Config rules can be enabled (AWS Config is disabled by default
 - Cloud trail enabled;
 - IAM password policy compliance.
 
-In addition the module is able to create the necessary resources to enable CloudWatch cross-account observability (oam), theis feature is disabled by default. Make sure you have an AWS account configured as monitoring account before enabling. More details can be found [here](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Cross-Account-Cross-Region.html).
+In addition this module is able to create the necessary resources to enable CloudWatch cross-account observability (oam), this feature is disabled by default. Make sure you have an AWS account configured as monitoring account before enabling. More details can be found [here](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Cross-Account-Cross-Region.html).
 
 <sup>1</sup>Terraform does not allow passing unset value similar to `!Ref "AWS::NoValue"`. Due to this limitation only a single tag `tag1Key` can be passed as a parameter to to this module. If you require additional key-value pairs in your AWS config REQUIRED_TAGS rule, the module must be extended manually.
 
