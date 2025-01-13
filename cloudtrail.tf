@@ -1,13 +1,10 @@
-data "aws_caller_identity" "current" {
-}
+data "aws_caller_identity" "current" {}
 
 locals {
   bucket_name = "${data.aws_caller_identity.current.account_id}-${var.trail_name}-cloudtrail"
 }
 
-#
 # CloudTrail
-#
 resource "aws_cloudtrail" "cloudtrail" {
   count = var.enable_cloudtrail ? 1 : 0
 
@@ -43,17 +40,13 @@ resource "aws_cloudtrail" "cloudtrail" {
   tags = var.tags
 }
 
-#
 # CloudTrail Cloudwatch Log Group
-#
 resource "aws_cloudwatch_log_group" "log_group" {
   count = var.enable_cloudwatch_logs ? 1 : 0
   name  = var.cloudwatch_log_group_name
 }
 
-#
 # CloudTrail Cloudwatch IAM Role
-#
 data "aws_iam_policy_document" "cloudwatch_assume" {
   statement {
     principals {
@@ -92,9 +85,7 @@ resource "aws_iam_policy" "cloudwatch_iam_policy" {
   policy = data.aws_iam_policy_document.cloudwatch[0].json
 }
 
-#
 # CloudTrail S3 bucket
-#
 resource "aws_kms_key" "cloudtrail_bucket_key" {
   count = var.enable_cloudtrail ? 1 : 0
 

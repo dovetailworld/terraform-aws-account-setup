@@ -1,4 +1,4 @@
-# For this to work you need to have an AWS account configured as monitor account
+# For this to work you need to have an AWS account configured as monitoring account
 
 # AWS CloudWatch Observability Access Manager Link
 # Allows an AWS account to be connected to a monitor account
