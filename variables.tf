@@ -88,8 +88,6 @@ variable "read_only_group_name" {
   default     = "read-only"
 }
 
-### CLOUDTRAIL
-
 variable "cloudtrail_bucket" {
   type        = string
   description = "The name of the cloudtrail bucket."
@@ -177,7 +175,6 @@ variable "kms_key_id" {
   description = "The arn of the CMK key which is used for encrypting cloudtrail logs."
 }
 
-### AWS Config
 variable "aws_config_notification_emails" {
   description = "A list of email addresses for that will receive AWS Config changes notifications."
   default     = []
@@ -220,7 +217,6 @@ variable "enable_rule_iam_password_policy" {
   default     = false
 }
 
-### SSM Session Manager
 variable "enable_ssm_session_manager" {
   type        = bool
   description = "Specifies if the ssm session manager should be enabled."
@@ -249,30 +245,6 @@ variable "cloudwatch_encryption_enabled" {
   type        = bool
   default     = false
   description = "Encrypt log data."
-}
-
-variable "s3_bucket_state_file_creation" {
-  type        = bool
-  default     = false
-  description = "Whether to create S3 bucket in the AWS Account to store terraform state file."
-}
-
-variable "s3_bucket_state_file_name" {
-  type        = string
-  default     = ""
-  description = "The S3 bucket name which store the terraform state file."
-}
-
-variable "dynamodb_tables_creation" {
-  type        = bool
-  default     = false
-  description = "Whether to create dynamodb tables for terraform state file."
-}
-
-variable "dynamodb_tables_name" {
-  type        = string
-  default     = ""
-  description = "The dynamodb tables name."
 }
 
 variable "enable_oam" {
