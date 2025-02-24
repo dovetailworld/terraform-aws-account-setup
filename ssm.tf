@@ -15,6 +15,9 @@ resource "aws_ssm_document" "session_manager_prefs" {
         "s3EncryptionEnabled": ${var.s3_encryption_enabled ? "true" : "false"},
         "cloudWatchLogGroupName": "${var.cloudwatch_log_group_name}",
         "cloudWatchEncryptionEnabled": ${var.cloudwatch_encryption_enabled ? "true" : "false"}
+        "shellProfile": {
+          "linux": "/bin/bash"
+        }
     }
 }
 DOC
