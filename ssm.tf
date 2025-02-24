@@ -1,5 +1,5 @@
 # When encountering 'InvalidDocumentVersion: Version provided for document SSM-SessionManagerRunShell is not latest.'
-# Run 'aws ssm delete-document --name SSM-SessionManagerRunShell' and the re-apply Terraform
+# Run 'aws ssm delete-document --name SSM-SessionManagerRunShell' and then re-apply Terraform
 # https://github.com/hashicorp/terraform-provider-aws/issues/31131
 resource "aws_ssm_document" "session_manager_prefs" {
   count           = var.enable_ssm_session_manager ? 1 : 0
