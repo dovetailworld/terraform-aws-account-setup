@@ -19,7 +19,7 @@ resource "aws_ssm_document" "session_manager_prefs" {
         "cloudWatchLogGroupName": "${var.cloudwatch_log_group_name}",
         "cloudWatchEncryptionEnabled": ${var.cloudwatch_encryption_enabled ? "true" : "false"},
         "shellProfile": {
-          "linux": "/bin/bash"
+          "linux": "exec /bin/bash"
         }
     }
 }
